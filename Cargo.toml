@@ -1,0 +1,9 @@
+[package]
+name = "comment-header-rs"
+version = "0.0.1"
+edition = "2021"
+
+[dependencies]
+regex = "1.10.5"
+walkdir = "2.5.0"
+clap = "4.5.13"
