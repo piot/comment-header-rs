@@ -40,6 +40,7 @@ comment-header-rs --path <DIRECTORY> --license <FILE>
 
 - `--path <DIRECTORY>`: The root directory to recursively scan for source files.
 - `--license <FILE>`: Path to the file containing the new header.
+- `--extensions <EXTENSIONS>`: Comma-separated list of file extensions. (default: `rs,cs`).
 
 ## Template Variables
 
@@ -68,4 +69,4 @@ This will replace or add the header to all Rust and C# files in the src director
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.

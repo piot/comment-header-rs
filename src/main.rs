@@ -66,7 +66,6 @@ fn get_remote_url(root_dir: &Path) -> io::Result<String> {
 
     let url = String::from_utf8_lossy(&output.stdout).trim().to_string();
 
-    // Remove the trailing .git if present
     let trimmed_url = if url.ends_with(".git") {
         url.trim_end_matches(".git").to_string()
     } else {
@@ -80,8 +79,8 @@ fn replace_origin_in_header(new_header: &str, origin: &str) -> String {
     new_header.replace("$origin", origin)
 }
 
-fn process_files(root_dir: &Path, new_header: &str) -> io::Result<()> {
-    let re_extensions = Regex::new(r"\.(rs|cs)$").unwrap();
+fn process_files(root_dir: &Path, new_header: &str, extensions:&str) -> io::Result<()> {
+    let re_extensions = Regex::new(&format!(r"\.({})$", extensions.replace(',', "|"))).unwrap();
 
     for entry in WalkDir::new(root_dir)
         .into_iter()
@@ -116,10 +115,18 @@ fn main() -> io::Result<()> {
                 .value_name("FILE")
                 .help("Path to the file containing the new header"),
         )
+        .arg(
+            Arg::new("extensions")
+                .long("extensions")
+                .value_name("EXTENSIONS")
+                .default_value("rs,cs")
+                .help("Comma-separated list of file extensions to process (e.g., rs,cs)"),
+        )
         .get_matches();
 
     let root_dir = Path::new(matches.get_one::<String>("path").unwrap());
     let header_file_path = Path::new(matches.get_one::<String>("license").unwrap());
+    let extensions = matches.get_one::<String>("extensions").unwrap();
 
     let new_header = read_header_from_file(header_file_path)?;
 
@@ -127,7 +134,7 @@ fn main() -> io::Result<()> {
 
     let final_header = replace_origin_in_header(&new_header, &remote_url);
 
-    process_files(root_dir, &final_header)?;
+    process_files(root_dir, &final_header, extensions)?;
 
     println!("Comment Header done.");
 
