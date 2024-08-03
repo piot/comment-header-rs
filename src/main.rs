@@ -38,7 +38,10 @@ fn replace_header(file_path: &Path, new_header: &str) -> io::Result<()> {
         // Write the updated content back to the file
         fs::write(file_path, new_content)?;
     } else {
-        println!("Skipping file {:?} as the header is already up-to-date.", file_path);
+        println!(
+            "Skipping file {:?} as the header is already up-to-date.",
+            file_path
+        );
     }
 
     Ok(())
@@ -96,7 +99,7 @@ fn process_files(root_dir: &Path, new_header: &str) -> io::Result<()> {
 
 fn main() -> io::Result<()> {
     let matches = Command::new("Comment Header Replacer")
-        .version("0.1")
+        .version("0.0.1")
         .author("Peter Bjorklund <piot@hotmail.com>")
         .about("Replaces or adds a header in source files (Rust and C#)")
         .arg(
