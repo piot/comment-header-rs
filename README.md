@@ -6,7 +6,7 @@ This tool is particularly useful for managing and standardizing license headers 
 ## Features
 
 - **Replace or Add Headers**: Automatically replaces existing headers or adds a new header to source files.
-- **Supports Multiple Languages**: Works with Rust (`.rs`) and C# (`.cs`) files.
+- **Supports Multiple Languages**: Compatible with programming languages that utilize `/*` and `*/` for multi-line comments, including Rust, Swift, C#, C, C++, TypeScript, and others.
 - **Customizable Headers**: Use a custom header read from a file and replace placeholders with dynamic content such as the repository URL.
 
 ## Installation

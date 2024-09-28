@@ -11,7 +11,7 @@ use clap::{Arg, Command};
 use regex::Regex;
 use walkdir::WalkDir;
 
-const HEADER_PATTERN: &str = r"(?s)^\s*/\*.*?\*/";
+const HEADER_PATTERN: &str = r"(?s)^\s*/\*.*?\*/\s*";
 
 fn replace_header(file_path: &Path, new_header: &str) -> io::Result<()> {
     let content = fs::read_to_string(file_path)?;
@@ -79,7 +79,7 @@ fn replace_origin_in_header(new_header: &str, origin: &str) -> String {
     new_header.replace("$origin", origin)
 }
 
-fn process_files(root_dir: &Path, new_header: &str, extensions:&str) -> io::Result<()> {
+fn process_files(root_dir: &Path, new_header: &str, extensions: &str) -> io::Result<()> {
     let re_extensions = Regex::new(&format!(r"\.({})$", extensions.replace(',', "|"))).unwrap();
 
     for entry in WalkDir::new(root_dir)
@@ -100,7 +100,7 @@ fn main() -> io::Result<()> {
     let matches = Command::new("Comment Header Replacer")
         .version("0.0.1")
         .author("Peter Bjorklund <piot@hotmail.com>")
-        .about("Replaces or adds a header in source files (Rust and C#)")
+        .about("Replaces or adds a header in source files")
         .arg(
             Arg::new("path")
                 .long("path")
