@@ -13,20 +13,9 @@ This tool is particularly useful for managing and standardizing license headers 
 
 To build and run this tool, you'll need to have Rust installed. You can install Rust from [rustup.rs](https://rustup.rs).
 
-  1. Clone the repository:
-
 ```sh
-git clone https://github.com/piot/comment-header-rs.git
-cd comment-header-rs
+cargo install comment-header-rs
 ```
-
-  2. Build the project:
-
-```sh
-cargo build --release
-```
-
-The compiled binary will be located in the `target/release` directory.
 
 ## Usage
 
@@ -36,7 +25,7 @@ The tool is invoked from the command line and takes the following arguments:
 comment-header-rs --path <DIRECTORY> --license <FILE>
 ```
 
-## Arguments
+### Arguments
 
 - `--path <DIRECTORY>`: The root directory to recursively scan for source files.
 - `--license <FILE>`: Path to the file containing the new header.
@@ -44,7 +33,11 @@ comment-header-rs --path <DIRECTORY> --license <FILE>
 
 ## Template Variables
 
-- `$origin`. the git URL to the origin remote.
+You can include specific variables in your license file that will be automatically replaced with relevant values when the header is added to your source files. This allows for dynamic content, making your headers more informative and tailored to your project.
+
+### Available Variables
+
+- `$origin`. This variable will be replaced with the Git URL of the origin remote repository. It provides a direct link to the repository where the source code is hosted, which can be useful for reference and compliance.
 
 ## Example
 
@@ -62,7 +55,7 @@ Create a header file, `header.txt`, with the desired content, eg:
 Run the tool:
 
 ```sh
-./target/release/comment-header-rs --path src --license header.txt
+comment-header-rs --path src --license header.txt
 ```
 
 This will replace or add the header to all Rust and C# files in the src directory.
